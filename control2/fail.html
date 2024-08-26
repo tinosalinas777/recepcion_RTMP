@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error de Autenticación</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        .error-container {
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .error-title {
+            font-size: 24px;
+            color: #d9534f;
+            margin-bottom: 15px;
+        }
+        .error-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #5bc0de;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #6a31d5;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-title">Error de Autenticación</div>
+        <div class="error-message">Usuario o contraseña incorrectos. Por favor, inténtelo de nuevo.</div>
+        <button class="btn" onclick="window.location.href='../index.php'">Volver al Inicio</button>
+    </div>
+</body>
+</html>
