@@ -44,7 +44,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     </script>
 </head>
 <body>
-    <h1>Hola, Admin</h1>
+    <h1>Hola, Administrador</h1>
     <!-- Contenido de la pÃ¡gina -->
 </body>
 </html>
