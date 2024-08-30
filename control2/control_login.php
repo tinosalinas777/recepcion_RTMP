@@ -5,55 +5,59 @@ error_reporting(E_ALL);
 
 // Datos de la base de datos
 $servername = "localhost";
-$username = "pela"; // Cambia 'tu_usuario' por tu usuario de MySQL
-$password = "H4sh1982"; // Cambia 'tu_contraseña' por tu contraseña de MySQL
-$dbname = "login"; // Cambia 'nombre_de_tu_base_de_datos' por el nombre de tu base de datos
+$username = "pela";
+$password = "H4sh1982";
+$dbname = "login";
 
-// Crear conexión
+// Crear conexiÃ³n
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar conexión
+// Verificar conexiÃ³n
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    die("Conexion fallida: " . $conn->connect_error);
 }
+
+// Iniciar sesiÃ³n
+session_start();
 
 // Obtener los datos ingresados en el formulario
 $usuario = $_POST['usuarioIn'];
 $pass = $_POST['passIn'];
 
-// Preparar la consulta SQL para obtener el usuario
-$sql = "SELECT contraseña FROM usuarios WHERE usuario = ?";
+// Preparar la consulta SQL para obtener el usuario y el rol
+$sql = "SELECT contraseña, rol FROM usuarios WHERE usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $usuario);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Verificar si el usuario existe y la contraseña es correcta
+// Verificar si el usuario existe y la contraseÃ±a es correcta
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    // Verificar la contraseña
+    // Verificar la contraseÃ±a
     if (password_verify($pass, $row['contraseña'])) {
-        // Usuario y contraseña correctos
-        header("Location: ../administracion.php"); // Redirigir a add_user.html
+        // Usuario y contraseÃ±a correctos, iniciar la sesiÃ³n
+        $_SESSION['usuario'] = $usuario;
+        $_SESSION['rol'] = $row['rol'];
+        $_SESSION['last_activity'] = time(); // Guardar la Ãºltima actividad
+
+        // Redirigir segÃºn el rol del usuario
+        if ($row['rol'] == 'user') {
+            header("Location: ../administracion.php");
+        } else {
+            header("Location: ../usuario.php"); // PÃ¡gina para usuarios normales
+        }
         exit();
     } else {
-        // Contraseña incorrecta
-        
-            echo "<script>
-           
-            window.location.href = 'fail.html';
-        </script>";
+        // ContraseÃ±a incorrecta
+        echo "<script>window.location.href = 'fail.html';</script>";
     }
 } else {
     // Usuario no encontrado
-   
-             echo "<script>
-           
-            window.location.href = 'fail.html';
-        </script>";
+    echo "<script>window.location.href = 'fail.html';</script>";
 }
 
-// Cerrar la conexión
+// Cerrar la conexiÃ³n
 $stmt->close();
 $conn->close();
 ?>
